@@ -1,11 +1,201 @@
 import sys
-from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QPushButton, QFileDialog, QApplication,QFrame
+from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QPushButton, QFileDialog, QApplication,QFrame,\
+    QHBoxLayout,QLabel,QGridLayout,QStackedWidget
 from PySide6.QtGui import QFont
+from PySide6.QtCore import Qt
 from logic.file_operations import open_file, save_file
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        # first level
+        self.styleSheet = QWidget(self)
+
+        # second level
+        self.appMargins = QVBoxLayout(self.styleSheet)
+        self.bgApp = QFrame(self.styleSheet)
+
+        # 3rd level
+        self.appLayout = QHBoxLayout(self.bgApp)
+        self.leftMenuBg = QFrame(self.bgApp)
+        self.extraLeftBox = QFrame(self.bgApp)
+        self.contentBox = QFrame(self.bgApp)
+
+        # 4th level
+        # leftMenuBg
+        self.verticalLayout_3 = QVBoxLayout(self.leftMenuBg)
+        self.topLogoInfo = QFrame(self.leftMenuBg)
+        self.leftMenuFrame = QFrame(self.leftMenuBg)
+        # extraLeftBox
+        self.extraColumLayout = QVBoxLayout(self.extraLeftBox)
+        self.extraTopBg = QFrame(self.extraLeftBox)
+        self.extraContent = QFrame(self.extraLeftBox)
+        # contentBox
+        self.verticalLayout_2 = QVBoxLayout(self.contentBox)
+        self.contentTopBg = QFrame(self.contentBox)
+        self.contentBottom = QFrame(self.contentBox)
+
+        # 5th level
+        # topLogoInfo
+        self.topLogo = QFrame(self.topLogoInfo)
+        self.titleLeftApp = QLabel(self.topLogoInfo)
+        # leftMenuFrame
+        self.verticalMenuLayout = QVBoxLayout(self.leftMenuFrame)
+        self.topMenu = QFrame(self.leftMenuFrame)
+        self.bottomMenu = QFrame(self.leftMenuFrame)
+        # extraTopBg
+        self.verticalLayout_5 = QVBoxLayout(self.extraTopBg)
+        self.extraTopLayout = QGridLayout() # 哪里来的单独布局？？
+        self.extraIcon = QFrame(self.extraTopBg)
+        self.extraLabel = QLabel(self.extraTopBg)
+        self.extraCloseColumnBtn = QPushButton(self.extraTopBg)
+        # extraContent
+        self.verticalLayout_12 = QVBoxLayout(self.extraContent)
+        self.extraTopMenu = QFrame(self.extraContent)
+        self.extraCenter = QFrame(self.extraContent)
+        self.extraBottom = QFrame(self.extraContent)
+
+        # contentTopBg
+        self.horizontalLayout = QHBoxLayout(self.contentTopBg)
+        self.leftBox = QFrame(self.contentTopBg)
+        self.rightButtons = QFrame(self.contentTopBg)
+        # contentBottom
+        self.verticalLayout_6 = QVBoxLayout(self.contentBottom)
+        self.content = QFrame(self.contentBottom)
+        self.bottomBar = QFrame(self.contentBottom)
+
+        # extraTopMenu
+        self.verticalLayout_11 = QVBoxLayout(self.extraTopMenu)
+        # extraCenter
+        self.extraCenterLayout = QVBoxLayout(self.extraCenter)
+        # extraBottom
+        self.extraBottomLayout = QVBoxLayout(self.extraBottom)
+
+        # leftBox
+        self.horizontalLayout_3 = QHBoxLayout(self.leftBox)
+        self.toggleButton = QPushButton(self.leftBox)
+        self.titleRightInfo = QLabel(self.leftBox)
+        # rightButtons
+        self.horizontalLayout_2 = QHBoxLayout(self.rightButtons)
+        self.settingsTopBtn = QPushButton(self.rightButtons)
+        self.minimizeAppBtn = QPushButton(self.rightButtons)
+        self.maximizeRestoreAppBtn = QPushButton(self.rightButtons)
+        self.closeAppBtn = QPushButton(self.rightButtons)
+
+        # content
+        self.horizontalLayout_4 = QHBoxLayout(self.content)
+        self.pagesContainer = QFrame(self.content)
+        self.extraRightBox = QFrame(self.content)
+
+        # bottomBar
+        self.horizontalLayout_5 = QHBoxLayout(self.bottomBar)
+        self.creditsLabel = QLabel(self.bottomBar)
+        self.version = QLabel(self.bottomBar)
+        self.frame_size_grip = QFrame(self.bottomBar)
+
+        # pagesContainer
+        self.verticalLayout_15 = QVBoxLayout(self.pagesContainer)
+        self.stackedWidget = QStackedWidget(self.pagesContainer)
+
+
+
+        # extraRightBox
+        self.verticalLayout_7 = QVBoxLayout(self.extraRightBox)
+        self.contentSettings = QFrame(self.extraRightBox)
+
+        # contentSettings
+        self.verticalLayout_13 = QVBoxLayout(self.contentSettings)
+        self.topMenus = QFrame(self.contentSettings)
+        # topMenus
+        self.verticalLayout_14 = QVBoxLayout(self.topMenus)
+        self.btn_logout = QPushButton(self.topMenus)
+
+
+        self.verticalLayout_14.addWidget(self.btn_logout)
+        # verticalLayout_13
+        self.verticalLayout_13.addWidget(self.topMenus, 0, Qt.AlignTop)
+
+        # verticalLayout_7
+        self.verticalLayout_7.addWidget(self.contentSettings)
+        # stackedWidget
+        self.stackedWidget.addWidget(self.home)
+        self.stackedWidget.addWidget(self.shotcollection_page)
+        self.stackedWidget.addWidget(self.scriptconf_page)
+        # verticalLayout_15
+        self.verticalLayout_15.addWidget(self.stackedWidget)
+
+        # horizontalLayout_5
+        self.horizontalLayout_5.addWidget(self.creditsLabel)
+        self.horizontalLayout_5.addWidget(self.version)
+        self.horizontalLayout_5.addWidget(self.frame_size_grip)
+
+        # horizontalLayout_4
+        self.horizontalLayout_4.addWidget(self.pagesContainer)
+        self.horizontalLayout_4.addWidget(self.extraRightBox)
+
+        # horizontalLayout_2
+        self.horizontalLayout_2.addWidget(self.settingsTopBtn)
+        self.horizontalLayout_2.addWidget(self.minimizeAppBtn)
+        self.horizontalLayout_2.addWidget(self.maximizeRestoreAppBtn)
+        self.horizontalLayout_2.addWidget(self.closeAppBtn)
+
+        self.horizontalLayout_3.addWidget(self.toggleButton)
+        self.horizontalLayout_3.addWidget(self.titleRightInfo)
+
+        self.extraBottomLayout.addWidget(self.btn_confsave)
+        self.extraCenterLayout.addWidget(self.mdsconntest, 0, Qt.AlignTop)
+
+        self.verticalLayout_6.addWidget(self.content)
+        self.verticalLayout_6.addWidget(self.bottomBar)
+
+        # horizontalLayout
+        self.horizontalLayout.addWidget(self.leftBox)
+        self.horizontalLayout.addWidget(self.rightButtons, 0, Qt.AlignRight)
+
+        self.verticalLayout_12.addWidget(self.extraBottom, 0, Qt.AlignBottom)
+        self.verticalLayout_12.addWidget(self.extraCenter, Qt.AlignTop)
+        self.verticalLayout_12.addWidget(self.extraTopMenu, 0, Qt.AlignTop)
+
+        self.extraTopLayout.addWidget(self.extraIcon, 0, 0, 1, 1)
+        self.extraTopLayout.addWidget(self.extraLabel, 0, 1, 1, 1)
+        self.extraTopLayout.addWidget(self.extraCloseColumnBtn, 0, 2, 1, 1)
+        self.verticalLayout_5.addLayout(self.extraTopLayout) # 看不懂只有这一个布局？确定这个布局是做什么用的！
+
+        # 将 self.topMenu 小部件添加到 self.verticalMenuLayout 布局中
+        # 第二个参数 `0` 表示将 topMenu 插入到布局的第一个位置
+        # 第三个参数 `Qt.AlignTop` 表示将 topMenu 在布局中垂直对齐到顶部
+        self.verticalMenuLayout.addWidget(self.topMenu, 0, Qt.AlignTop)
+        self.verticalMenuLayout.addWidget(self.bottomMenu, 0, Qt.AlignBottom)
+
+        # verticalLayout_2
+        self.verticalLayout_2.addWidget(self.contentTopBg)
+        self.verticalLayout_2.addWidget(self.contentBottom)
+
+        # 6th level
+        self.extraColumLayout.addWidget(self.extraTopBg)
+        self.extraColumLayout.addWidget(self.extraContent)
+
+        # verticalLayout_3
+        self.verticalLayout_3.addWidget(self.topLogoInfo)
+        self.verticalLayout_3.addWidget(self.leftMenuFrame)
+
+
+
+        # 3rd level
+        self.appLayout.addWidget(self.leftMenuBg)
+        self.appLayout.addWidget(self.extraLeftBox)
+        self.appLayout.addWidget(self.contentBox)
+
+        # 2rd level
+        self.appMargins.addWidget(self.bgApp)
+
+        # 1st level
+        self.setCentralWidget(self.styleSheet)
+
+        #
+        self.central_widget = QWidget(self)
+
+
 
         # create fonts
         self.background_frame = None
